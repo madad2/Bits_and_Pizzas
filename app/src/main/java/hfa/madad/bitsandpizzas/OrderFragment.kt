@@ -9,7 +9,9 @@ import android.widget.RadioGroup
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.google.android.material.appbar.MaterialToolbar
+import com.google.android.material.chip.Chip
 import com.google.android.material.floatingactionbutton.FloatingActionButton
+import com.google.android.material.snackbar.Snackbar
 
 class OrderFragment : Fragment() {
     override fun onCreateView(
@@ -31,6 +33,17 @@ class OrderFragment : Fragment() {
                 Toast.makeText(activity, text, Toast.LENGTH_SHORT).show()
             } else {
                 //Вывести заказ в Snackbar сообщении
+                var text = (when (pizzaType) {
+                    R.id.radio_diavolo -> "Diavolo pizza"
+                    else -> "Funghi pizza"
+                })
+                val parmesan = view.findViewById<Chip>(R.id.parmesan)
+                text += if (parmesan.isChecked) ", extra parmesan" else ""
+
+                val chiliOil = view.findViewById<Chip>(R.id.chili_oil)
+                text += if (chiliOil.isChecked) ", extra chili oil" else ""
+
+                Snackbar.make(fab, text, Snackbar.LENGTH_LONG).show()
             }
         }
         // Inflate the layout for this fragment
